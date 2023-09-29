@@ -10,7 +10,7 @@ function AssessmentsTable() {
       addedBy: "",
     },
     {
-      subject: "Computer Networking",
+      subject: "Cloude Computing",
       teacher: "",
       assessment: "OHT-1",
       giventAt: "Monday, May 2, 2023",
@@ -20,7 +20,7 @@ function AssessmentsTable() {
       addedBy: "",
     },
     {
-      subject: "Computer Networking",
+      subject: "Software Management System",
       teacher: "",
       assessment: "OHT-1",
       giventAt: "Monday, May 2, 2023",
@@ -30,7 +30,7 @@ function AssessmentsTable() {
       addedBy: "",
     },
     {
-      subject: "Computer Networking",
+      subject: "Technical & Business Writing",
       teacher: "",
       assessment: "OHT-1",
       giventAt: "Monday, May 2, 2023",
@@ -40,7 +40,7 @@ function AssessmentsTable() {
       addedBy: "",
     },
     {
-      subject: "Computer Networking",
+      subject: "Management Information System",
       teacher: "",
       assessment: "OHT-1",
       giventAt: "Monday, May 2, 2023",
@@ -50,7 +50,7 @@ function AssessmentsTable() {
       addedBy: "",
     },
     {
-      subject: "Computer Networking",
+      subject: "Software Re-Engineering",
       assessment: "OHT-1",
       giventAt: "Monday, May 2, 2023",
       updatedAt: "Wednesday, May 4, 2023",
