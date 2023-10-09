@@ -1,118 +1,57 @@
-function AssessmentsTable() {
-  const subectsData = [
-    {
-      subject: "Computer Networking",
-      assessment: "OHT-1",
-      giventAt: "Monday, May 2, 2023",
-      updatedAt: "Wednesday, May 4, 2023",
-      description: "",
-      updateBy: "",
-      addedBy: "",
-    },
-    {
-      subject: "Cloude Computing",
-      teacher: "",
-      assessment: "OHT-1",
-      giventAt: "Monday, May 2, 2023",
-      updatedAt: "Wednesday, May 4, 2023",
-      description: "",
-      updateBy: "",
-      addedBy: "",
-    },
-    {
-      subject: "Software Management System",
-      teacher: "",
-      assessment: "OHT-1",
-      giventAt: "Monday, May 2, 2023",
-      updatedAt: "Wednesday, May 4, 2023",
-      description: "",
-      updateBy: "",
-      addedBy: "",
-    },
-    {
-      subject: "Technical & Business Writing",
-      teacher: "",
-      assessment: "OHT-1",
-      giventAt: "Monday, May 2, 2023",
-      updatedAt: "Wednesday, May 4, 2023",
-      description: "",
-      updateBy: "",
-      addedBy: "",
-    },
-    {
-      subject: "Management Information System",
-      teacher: "",
-      assessment: "OHT-1",
-      giventAt: "Monday, May 2, 2023",
-      updatedAt: "Wednesday, May 4, 2023",
-      description: "",
-      updateBy: "",
-      addedBy: "",
-    },
-    {
-      subject: "Software Re-Engineering",
-      assessment: "OHT-1",
-      giventAt: "Monday, May 2, 2023",
-      updatedAt: "Wednesday, May 4, 2023",
-      description: "",
-      updateBy: "",
-      addedBy: "",
-    },
-  ];
-
+import { getDate } from "../../helpers";
+const AssessmentsTable: React.FC<any> = ({ assessment }) => {
   return (
     <>
       <div className="overflow-y-hidden overflow-x-auto">
         <div className="w-full sm:w-11/12 md:w-fit max-w-[1000px] mx-auto p-4 shadow-md bg-white">
           <h1 className=" text-center pb-3 text-xl font-bold">
-            Monday, 12 June, 2023
+            {getDate(assessment.lastDate)}
           </h1>
           <table className="min-w-full border-collapse w-full">
-  <thead>
-    <tr>
-      <th className="border bg-blue-700 text-white font-medium text-left px-4 py-2">
-        Subject
-      </th>
-      <th className="border bg-blue-700 text-white font-medium text-left px-4 py-2">
-        Assessment
-      </th>
-      <th className="border bg-blue-700 text-white font-medium text-left px-4 py-2 hidden md:table-cell">
-        Given At
-      </th>
-      <th className="border bg-blue-700 text-white font-medium text-left px-4 py-2 hidden md:table-cell">
-        Updated At
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    {subectsData.map((item, index) => (
-      <tr
-        key={index}
-        className={index % 2 === 0 ? `bg-white` : `bg-blue-50`}
-      >
-        <td
-          className={`${
-            index % 2 === 0
-              ? `hover:bg-gray-100 active:bg-gray-50 transition-all duration-200`
-              : `hover:bg-blue-100 active:bg-blue-50 transition-all duration-200`
-          } border`}
-        >
-          <a href="#" className="px-4 py-2 w-full h-full flex">
-            {item.subject}
-          </a>
-        </td>
-        <td className="border px-4 py-2">{item.assessment}</td>
-        <td className="border px-4 py-2 hidden md:table-cell">{item.giventAt}</td>
-        <td className="border px-4 py-2 hidden md:table-cell">{item.updatedAt}</td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-
+            <thead>
+              <tr>
+                <th className="border bg-blue-700 text-white font-medium text-left px-4 py-2">
+                  Subject
+                </th>
+                <th className="border bg-blue-700 text-white font-medium text-left px-4 py-2">
+                  Title
+                </th>
+                <th className="border bg-blue-700 text-white font-medium text-left px-4 py-2 hidden md:table-cell">
+                  Issue Date
+                </th>
+                <th className="border bg-blue-700 text-white font-medium text-left px-4 py-2 hidden md:table-cell">
+                  Time
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {assessment.assessments.map((item: any, index: number) => (
+                <tr
+                  key={index}
+                  className={`${index % 2 === 0 ? `bg-white` : `bg-blue-50`} ${
+                    index % 2 === 0
+                      ? `hover:bg-gray-100 active:bg-gray-50 transition-all duration-200`
+                      : `hover:bg-blue-100 active:bg-blue-50 transition-all duration-200`
+                  } border cursor-pointer`}
+                >
+                  <td className={`border px-4 py-2`}>{item.subject}</td>
+                  <td className="border px-4 py-2 min-w-[200px]">
+                    {item.title}
+                  </td>
+                  <td className="border px-4 py-2 hidden md:table-cell">
+                    {getDate(item.issueDate)}
+                  </td>
+                  <td className="border px-4 py-2 hidden md:table-cell">
+                    {item.time}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </>
   );
-}
+};
 
 export default AssessmentsTable;

@@ -1,6 +1,7 @@
 import React from "react";
 
 interface BaseInputProps {
+  className?: string;
   value?: string;
   name?: string;
   label?: string;
@@ -14,13 +15,14 @@ export const BaseInput: React.FC<BaseInputProps> = ({
   onChange,
   label,
   type,
+  className,
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange({ value: event.target.value, name: event.target.name });
   };
 
   return (
-    <div>
+    <div className={className}>
       {label?.length && (
         <label className="block font-medium text-gray-700">{label}</label>
       )}

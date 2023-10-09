@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BaseInput } from "./BaseInput";
 import SelectBox from "./SelectBox";
+import { db, doc, setDoc, collection } from "../../firebase/firebaseConfig";
+import { getDate, getTime } from "../../helpers";
 
 const AssessmentsForm: React.FC = () => {
+  const [isCustomeTitle, setIsCustomTitle] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     subject: "",
     teacher: "",
-    assessment: "",
-    givenAt: "",
-    updatedAt: "",
+    issueDate: "",
     lastDate: "",
     title: "",
     description: "",
-    updateBy: "",
-    addedBy: "",
+    addedBy: "Adnan Ali",
   });
 
+  // handleChange to set formData
   const handleChange = (data: {
     value: string | number | Date;
     name: string;
@@ -24,27 +25,13 @@ const AssessmentsForm: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const isFormValid = () => {
-    return (
-      formData.subject.length > 0 &&
-      formData.teacher.length > 0 &&
-      formData.assessment.length > 0
-    );
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    if (isFormValid()) {
-      e.preventDefault();
-      console.log(formData);
-    }
-  };
-
   const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, description: event.target.value });
   };
 
+  // select box options
   const subjects = [
     "Computer Networks",
     "Cloude Computing",
@@ -54,21 +41,88 @@ const AssessmentsForm: React.FC = () => {
   const assessments = [
     "OHT-1",
     "OHT-2",
-    "Quiz-1",
-    "Quiz-2",
-    "Quiz-3",
     "Assignment 1",
     "Assignment 2",
-    "Assignment 3",
-    "Assignment 4",
+    "Custom",
   ];
 
   const teachers = ["Dr. Sabit Rahim", "Mr. Kifayat"];
 
+  // handle custom field for title input
+  useEffect(() => {
+    if (formData.title) {
+      if (
+        formData.title === "OHT-1" ||
+        formData.title === "OHT-2" ||
+        formData.title === "Assignment 1" ||
+        formData.title === "Assignment 2"
+      )
+        setIsCustomTitle(false);
+      else {
+        if (!isCustomeTitle) {
+          setFormData({ ...formData, title: "" });
+        }
+        setIsCustomTitle(true);
+      }
+    }
+  }, [formData.title]);
+
+  const isFormValid = () => {
+    return (
+      formData.subject.length > 0 &&
+      formData.teacher.length > 0 &&
+      formData.title.length > 0
+    );
+  };
+
+  useEffect(() => {
+    console.log(getTime(new Date(formData.lastDate)));
+  }, [formData.lastDate]);
+
+  // handle submission of assessments
+  const addAssessment = (e: React.FormEvent) => {
+    if (isFormValid()) {
+      e.preventDefault();
+
+      const dataTOPost = {
+        lastDate: formData.lastDate,
+        assessments: [
+          {
+            subject: formData.subject,
+            teacher: formData.teacher,
+            issueDate: formData.issueDate,
+            title: formData.title,
+            description: formData.description,
+            addedBy: formData.addedBy,
+            time: getTime(new Date(formData.lastDate)),
+          },
+        ],
+      };
+
+      const baseColRel = collection(db, "departments");
+      const departmentsRef = doc(baseColRel, "Computer Science");
+      const program = collection(departmentsRef, "Software Engineering");
+      const batchRef = doc(program, "BSSE 2021-2025");
+      const semesterRef = doc(
+        collection(batchRef, "Semester 5"),
+        getDate(new Date(formData.lastDate))
+      );
+
+      // Set the document data using setDoc
+      setDoc(semesterRef, dataTOPost)
+        .then(() => {
+          console.log("Document successfully written!");
+        })
+        .catch((error) => {
+          console.error("Error setting document: ", error);
+        });
+    }
+  };
+
   return (
     <div className="p-6">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={addAssessment}
         className="space-y-4 w-[600px] bg-white p-8 shadow-md"
       >
         <h1 className="font-bold text-xl text-center">
@@ -91,19 +145,11 @@ const AssessmentsForm: React.FC = () => {
             value={formData.teacher}
             onChange={(event) => handleChange(event)}
           />
-          <SelectBox
-            name="assessment"
-            label="Assessment"
-            required
-            options={assessments}
-            value={formData.assessment}
-            onChange={(event) => handleChange(event)}
-          />
           <BaseInput
             type="date"
             label="Given At"
-            name="givenAt"
-            value={formData.givenAt}
+            name="issueDate"
+            value={formData.issueDate}
             onChange={(event) => handleChange(event)}
           />
           <BaseInput
@@ -113,12 +159,24 @@ const AssessmentsForm: React.FC = () => {
             value={formData.lastDate}
             onChange={(event) => handleChange(event)}
           />
-          <BaseInput
-            label="Title"
-            name="title"
-            value={formData.title}
-            onChange={(event) => handleChange(event)}
-          />
+          {isCustomeTitle ? (
+            <BaseInput
+              className="col-span-2"
+              label="Title"
+              name="title"
+              value={formData.title}
+              onChange={(event) => handleChange(event)}
+            />
+          ) : (
+            <SelectBox
+              className="col-span-2"
+              name="title"
+              label="Title"
+              options={assessments}
+              value={formData.title}
+              onChange={(event) => handleChange(event)}
+            />
+          )}
           <div className="col-span-2">
             <label className="block font-medium text-gray-700">
               Description
@@ -133,10 +191,7 @@ const AssessmentsForm: React.FC = () => {
         </div>
 
         <div className="flex justify-end">
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-          >
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 active:scale-95">
             Submit
           </button>
         </div>

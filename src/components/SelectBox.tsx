@@ -1,6 +1,7 @@
 import React from "react";
 
 interface BaseSelectBoxProps {
+  className?: string;
   value?: string;
   name?: string;
   label?: string;
@@ -16,13 +17,14 @@ const SelectBox: React.FC<BaseSelectBoxProps> = ({
   label,
   options,
   required,
+  className,
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     onChange({ value: event.target.value, name: event.target.name });
   };
 
   return (
-    <div>
+    <div className={className}>
       {label && (
         <label className="block font-medium text-gray-700">{label}</label>
       )}
