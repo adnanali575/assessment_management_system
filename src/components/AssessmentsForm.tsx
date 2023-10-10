@@ -145,13 +145,12 @@ const AssessmentsForm: React.FC = () => {
   useEffect(() => {
     setFormData({
       ...formData,
-      time: `${formData.hours}:${formData.minutes} ${
-        formData.hours === "09" ||
-        formData.hours === "10" ||
-        formData.hours === "11"
+      time: `${formData.hours}:${formData.minutes} ${formData.hours === "09" ||
+          formData.hours === "10" ||
+          formData.hours === "11"
           ? `AM`
           : `PM`
-      }`,
+        }`,
     });
   }, [formData.hours, formData.minutes]);
 
@@ -162,7 +161,7 @@ const AssessmentsForm: React.FC = () => {
     "Computer Networks",
     "Cloude Computing",
     "Software Re-Engineering",
-    "Software Managment System",
+    "Software Project Managment System",
     "Technical & Business Writing",
     "Management Information System",
   ];
@@ -182,14 +181,14 @@ const AssessmentsForm: React.FC = () => {
     "Chand Safi",
     "Kamni Raees",
   ];
-  const hours = ["09", "10", "11", "12", "01", "02", "03", "04", "05"];
+  const hours = ["09", "10", "11", "12", "01", "02", "03", "04"];
   const minutes = ["00", "30"];
 
   return (
-    <div className="p-6 w-full flex justify-center">
+    <div className="w-full flex justify-center">
       <form
         onSubmit={addAssessment}
-        className="space-y-4 w-full sm:w-[600px] bg-white p-8 shadow-md"
+        className="space-y-4 w-full sm:w-[715px] bg-white p-8 shadow-md"
       >
         <h1 className="font-bold text-xl text-center">
           Add Assessment Details

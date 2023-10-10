@@ -26,15 +26,15 @@ function App() {
 
   return (
     <>
-      <div className="min-h-screen w-screen bg-gray-50">
-        <div className="flex flex-col items-center w-fit mx-auto gap-4 md:gap-8 lg:p-5">
+      <div className="min-h-screen w-screen bg-gray-50 space-y-5">
+        <div className="flex flex-col items-center w-fit mx-auto gap-2 sm:gap-4 md:gap-8 sm:p-4">
           {assessmentsData.map((assessment, i) => (
             <AssessmentsTable key={i} assessment={assessment} />
           ))}
-          <div>
+        </div>
+          <div className="sm:px-4">
             <AssessmentsForm />
           </div>
-        </div>
       </div>
     </>
   );
