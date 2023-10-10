@@ -37,7 +37,7 @@ const SelectBox: React.FC<BaseSelectBoxProps> = ({
         className="border rounded-md px-3 py-2 w-full outline-none focus:border-blue-300"
       >
         <option disabled value="">
-          Select {label}
+          {label}
         </option>
         {options.map((option, i) => (
           <option key={i} value={option}>

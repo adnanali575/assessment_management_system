@@ -2,10 +2,10 @@ import { getDate } from "../../helpers";
 const AssessmentsTable: React.FC<any> = ({ assessment }) => {
   return (
     <>
-      <div className="overflow-y-hidden overflow-x-auto">
-        <div className="w-full sm:w-11/12 md:w-fit max-w-[1000px] mx-auto p-4 shadow-md bg-white">
+      <div className="w-full overflow-y-hidden overflow-x-auto shadow-md">
+        <div className="w-full shadow-md bg-white">
           <h1 className=" text-center pb-3 text-xl font-bold">
-            {getDate(assessment.lastDate)}
+            {getDate(new Date(assessment.lastDate))}
           </h1>
           <table className="min-w-full border-collapse w-full">
             <thead>
@@ -39,7 +39,7 @@ const AssessmentsTable: React.FC<any> = ({ assessment }) => {
                     {item.title}
                   </td>
                   <td className="border px-4 py-2 hidden md:table-cell">
-                    {getDate(item.issueDate)}
+                    {getDate(new Date(item.issueDate))}
                   </td>
                   <td className="border px-4 py-2 hidden md:table-cell">
                     {item.time}

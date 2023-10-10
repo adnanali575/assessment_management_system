@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { BaseInput } from "./BaseInput";
 import SelectBox from "./SelectBox";
-import { db, doc, setDoc, collection } from "../../firebase/firebaseConfig";
-import { getDate, getTime } from "../../helpers";
+import {
+  db,
+  doc,
+  setDoc,
+  collection,
+  getDoc,
+  updateDoc,
+} from "../../firebase/firebaseConfig";
+import { getDate } from "../../helpers";
+import BaseButton from "./BaseButton";
 
 const AssessmentsForm: React.FC = () => {
   const [isCustomeTitle, setIsCustomTitle] = useState<boolean>(false);
+  const [isBtnLoading, setIsBtnLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     subject: "",
     teacher: "",
@@ -14,6 +23,10 @@ const AssessmentsForm: React.FC = () => {
     title: "",
     description: "",
     addedBy: "Adnan Ali",
+    hours: "",
+    minutes: "",
+    dayTime: "AM",
+    time: "",
   });
 
   // handleChange to set formData
@@ -30,23 +43,6 @@ const AssessmentsForm: React.FC = () => {
   ) => {
     setFormData({ ...formData, description: event.target.value });
   };
-
-  // select box options
-  const subjects = [
-    "Computer Networks",
-    "Cloude Computing",
-    "Software Managment System",
-  ];
-
-  const assessments = [
-    "OHT-1",
-    "OHT-2",
-    "Assignment 1",
-    "Assignment 2",
-    "Custom",
-  ];
-
-  const teachers = ["Dr. Sabit Rahim", "Mr. Kifayat"];
 
   // handle custom field for title input
   useEffect(() => {
@@ -75,14 +71,11 @@ const AssessmentsForm: React.FC = () => {
     );
   };
 
-  useEffect(() => {
-    console.log(getTime(new Date(formData.lastDate)));
-  }, [formData.lastDate]);
-
   // handle submission of assessments
   const addAssessment = (e: React.FormEvent) => {
     if (isFormValid()) {
       e.preventDefault();
+      setIsBtnLoading(true);
 
       const dataTOPost = {
         lastDate: formData.lastDate,
@@ -94,44 +87,117 @@ const AssessmentsForm: React.FC = () => {
             title: formData.title,
             description: formData.description,
             addedBy: formData.addedBy,
-            time: getTime(new Date(formData.lastDate)),
+            time: formData.time,
           },
         ],
       };
 
-      const baseColRel = collection(db, "departments");
-      const departmentsRef = doc(baseColRel, "Computer Science");
-      const program = collection(departmentsRef, "Software Engineering");
+      // -------------------------------------------------------------------------
+      const program = collection(db, "Software Engineering");
       const batchRef = doc(program, "BSSE 2021-2025");
       const semesterRef = doc(
         collection(batchRef, "Semester 5"),
         getDate(new Date(formData.lastDate))
       );
 
-      // Set the document data using setDoc
-      setDoc(semesterRef, dataTOPost)
+      // Get the document data
+      getDoc(semesterRef)
+        .then((docSnapshot) => {
+          if (docSnapshot.exists()) {
+            const data = docSnapshot.data();
+
+            data.assessments.push(dataTOPost.assessments[0]);
+
+            updateDoc(semesterRef, data);
+          } else {
+            if (formData.lastDate) {
+              const program = collection(db, "Software Engineering");
+              const batchRef = doc(program, "BSSE 2021-2025");
+              const semesterRef = doc(
+                collection(batchRef, "Semester 5"),
+                getDate(new Date(formData.lastDate))
+              );
+
+              setDoc(semesterRef, dataTOPost)
+                .then(() => {
+                  console.log("Document successfully written!");
+                  setIsBtnLoading(false);
+                })
+                .catch((error) => {
+                  console.error("Error setting document: ", error);
+                  setIsBtnLoading(false);
+                });
+            }
+          }
+        })
         .then(() => {
-          console.log("Document successfully written!");
+          console.log("Document successfully updated!");
+          setIsBtnLoading(false);
         })
         .catch((error) => {
-          console.error("Error setting document: ", error);
+          console.error("Error updating document: ", error);
+          setIsBtnLoading(false);
         });
     }
   };
 
+  // method to prepare assessment time
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      time: `${formData.hours}:${formData.minutes} ${
+        formData.hours === "09" ||
+        formData.hours === "10" ||
+        formData.hours === "11"
+          ? `AM`
+          : `PM`
+      }`,
+    });
+  }, [formData.hours, formData.minutes]);
+
+  // select box values -----------------------------------------
+
+  // select box options
+  const subjects = [
+    "Computer Networks",
+    "Cloude Computing",
+    "Software Re-Engineering",
+    "Software Managment System",
+    "Technical & Business Writing",
+    "Management Information System",
+  ];
+
+  const assessments = [
+    "OHT-1",
+    "OHT-2",
+    "Assignment 1",
+    "Assignment 2",
+    "Custom",
+  ];
+
+  const teachers = [
+    "Dr. Sabit Rahim",
+    "Mr. Kifayat",
+    "Mr. Sajid Hussain",
+    "Chand Safi",
+    "Kamni Raees",
+  ];
+  const hours = ["09", "10", "11", "12", "01", "02", "03", "04", "05"];
+  const minutes = ["00", "30"];
+
   return (
-    <div className="p-6">
+    <div className="p-6 w-full flex justify-center">
       <form
         onSubmit={addAssessment}
-        className="space-y-4 w-[600px] bg-white p-8 shadow-md"
+        className="space-y-4 w-full sm:w-[600px] bg-white p-8 shadow-md"
       >
         <h1 className="font-bold text-xl text-center">
           Add Assessment Details
         </h1>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col sm:grid grid-cols-2 gap-4">
           <SelectBox
             name="subject"
-            label="Subject"
+            label="Select Subject"
             required
             options={subjects}
             value={formData.subject}
@@ -139,7 +205,7 @@ const AssessmentsForm: React.FC = () => {
           />
           <SelectBox
             name="teacher"
-            label="Teacher"
+            label="Select Teacher"
             required
             options={teachers}
             value={formData.teacher}
@@ -147,7 +213,7 @@ const AssessmentsForm: React.FC = () => {
           />
           <BaseInput
             type="date"
-            label="Given At"
+            label="Issue Date"
             name="issueDate"
             value={formData.issueDate}
             onChange={(event) => handleChange(event)}
@@ -161,7 +227,6 @@ const AssessmentsForm: React.FC = () => {
           />
           {isCustomeTitle ? (
             <BaseInput
-              className="col-span-2"
               label="Title"
               name="title"
               value={formData.title}
@@ -169,7 +234,6 @@ const AssessmentsForm: React.FC = () => {
             />
           ) : (
             <SelectBox
-              className="col-span-2"
               name="title"
               label="Title"
               options={assessments}
@@ -177,6 +241,33 @@ const AssessmentsForm: React.FC = () => {
               onChange={(event) => handleChange(event)}
             />
           )}
+          <div className="grid grid-cols-3 gap-2">
+            <SelectBox
+              name="hours"
+              label="Hours"
+              required
+              options={hours}
+              value={formData.hours}
+              onChange={(data) => handleChange(data)}
+            />
+
+            <SelectBox
+              name="minutes"
+              label="Minutes"
+              required
+              options={minutes}
+              value={formData.minutes}
+              onChange={(data) => handleChange(data)}
+            />
+            <SelectBox
+              name="dayTime"
+              label="Day Time"
+              required
+              options={["AM", "PM"]}
+              value={formData.dayTime}
+              onChange={(data) => handleChange(data)}
+            />
+          </div>
           <div className="col-span-2">
             <label className="block font-medium text-gray-700">
               Description
@@ -191,9 +282,11 @@ const AssessmentsForm: React.FC = () => {
         </div>
 
         <div className="flex justify-end">
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 active:scale-95">
-            Submit
-          </button>
+          <BaseButton
+            title="Submit"
+            isLoading={isBtnLoading}
+            className="w-[120px]"
+          />
         </div>
       </form>
     </div>
