@@ -35,10 +35,12 @@
   animation: spinner 1s linear infinite;
 }
 
-.shadow-custom {
-  box-shadow: 0px 0px 9px -6px #000;
-}
+@media (max-width: 767px) {
+  .shadow-custom {
+    box-shadow: 0px 0px 9px -6px #000;
+  }
 
-.shadow-custom:hover {
-  box-shadow: 0px 0px 9px -6px #000;
+  .shadow-custom:active {
+    transform: scale(.95);
+  }
 }

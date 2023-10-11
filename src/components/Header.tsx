@@ -7,7 +7,7 @@ const Header = () => {
   const links = [
     { title: "Add Assessment", path: "#" },
     { title: "Previous Assessments", path: "#" },
-    { title: "View Assessments", path: "#" },
+    { title: "Time Table", path: "#" },
   ];
 
   const translation = { transform: "translateX(-100%)" };
@@ -27,13 +27,13 @@ const Header = () => {
           </div>
           <div
             onClick={() => setSideBarOpen(false)}
-            className={`fixed top-[76px] bottom-0 left-0 bg-black bg-opacity-40 transition-all duration-200 cursor-pointer w-screen
+            className={`fixed md:hidden top-[76px] bottom-0 left-0 bg-black bg-opacity-40 transition-all duration-200 cursor-pointer w-screen
             ${sideBarOpen ? `opacity-100` : `opacity-0 pointer-events-none`}`}
           ></div>
           <div
             style={sideBarOpen ? {} : translation}
             className={`p-4 bg-white  fixed top-[76px] w-[300px] border-t bottom-0 left-0 flex items-center gap-3 flex-col transition-all duration-300
-            ${`md:p-0 md:w-fit md:staticmd:p-0 md:border-none md:static md:flex-row`}`}
+            ${`md:w-fit md:p-0 md:border-none md:static md:flex-row`}`}
           >
             {links.map((link, i) => (
               <a
