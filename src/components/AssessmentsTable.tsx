@@ -3,10 +3,10 @@ const AssessmentsTable: React.FC<any> = ({ assessment }) => {
   return (
     <>
       <div className="w-full bg-white overflow-y-hidden overflow-x-auto shadow-md p-3">
-        <h1 className=" text-center pb-3 text-xl font-bold">
+        <h1 className="text-center pb-3 text-xl font-bold">
           {getDate(new Date(assessment.lastDate))}
         </h1>
-        <table className="min-w-full border-collapse w-full">
+        <table className="border-collapse w-full">
           <thead>
             <tr>
               <th className="border bg-blue-700 text-white font-medium text-left px-2 sm:px-4 py-2">

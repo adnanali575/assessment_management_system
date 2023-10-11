@@ -43,4 +43,12 @@
   .shadow-custom:active {
     transform: scale(.95);
   }
+
+  .sidebar-translation{
+    transform: translateX(-100%);
+  }
+
+  .sidebar-translation-reset{
+    transform: translateX(0);
+  }
 }

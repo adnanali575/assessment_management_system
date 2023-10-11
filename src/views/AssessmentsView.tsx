@@ -23,7 +23,7 @@ const AssessmentsView = () => {
     // console.log(assessmentsData);
   }, [assessmentsData]);
   return (
-    <div className="flex flex-col items-center w-fit mx-auto gap-2 sm:gap-4 md:gap-8 sm:p-4">
+    <div className="wfu flex flex-col items-center py-4 w-full lg:w-fit mx-auto gap-2 sm:gap-4 md:gap-8 sm:p-4">
       {assessmentsData.map((assessment, i) => (
         <AssessmentsTable key={i} assessment={assessment} />
       ))}

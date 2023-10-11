@@ -188,7 +188,7 @@ const AssessmentsForm: React.FC = () => {
     <div className="w-full flex justify-center">
       <form
         onSubmit={addAssessment}
-        className="space-y-4 w-full sm:w-[715px] bg-white p-8 shadow-md"
+        className="space-y-4 w-full sm:w-[750px] bg-white p-8 shadow-md"
       >
         <h1 className="font-bold text-xl text-center">
           Add Assessment Details
