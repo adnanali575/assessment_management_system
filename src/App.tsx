@@ -1,33 +1,42 @@
+import { useEffect } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AssessmentsView from "./views/AssessmentsView";
 import AddAssessmentView from "./views/AddAssessmentView";
-import Header from "./components/Header";
-// import * as ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PageNotFound from "./views/PageNotFound";
+import LoginView from "./views/LoginView";
+import DefaultLayout from "./layouts/DefaultLayout";
 
 function App() {
-  const router = createBrowserRouter([
+  useEffect(() => {
+    const disableTextSelection = () => {
+      document.body.style.userSelect = "none";
+    };
+    disableTextSelection();
+
+    return () => {
+      document.removeEventListener("selectstart", disableTextSelection);
+    };
+  }, []);
+
+  const routes = createBrowserRouter([
     {
-      path: "/",
-      element: <AssessmentsView />,
+      element: <DefaultLayout />,
+      children: [
+        { path: "/", element: <AssessmentsView /> },
+        {
+          path: "/add-assessment",
+          element: <AddAssessmentView />,
+        },
+        {
+          path: "*",
+          element: <PageNotFound />,
+        },
+      ],
     },
-    {
-      path: "/add-assessment",
-      element: <AddAssessmentView />,
-    },
-    {
-      path: "*",
-      element: <PageNotFound />,
-    },
+    { path: "/login", element: <LoginView /> },
   ]);
-  return (
-    <>
-      <Header />
-      <div className="min-h-screen pt-[76px] flex flex-col justify-between bg-gray-50 space-y-5">
-        <RouterProvider router={router} />
-      </div>
-    </>
-  );
+
+  return <RouterProvider router={routes} />;
 }
 
 export default App;

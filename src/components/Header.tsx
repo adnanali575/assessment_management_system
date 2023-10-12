@@ -1,14 +1,15 @@
 import { useState } from "react";
 import BaseButton from "./BaseButton";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
 
   const links = [
-      { title: "Home", path: "/" },
+    { title: "Home", path: "/" },
     { title: "Add Assessment", path: "add-assessment" },
     { title: "Previous Assessments", path: "/" },
-    { title: "Time Table", path: "#" },
+    { title: "Time Table", path: "/time-table" },
   ];
 
   return (
@@ -30,7 +31,7 @@ const Header = () => {
             ${sideBarOpen ? `opacity-100` : `opacity-0 pointer-events-none`}`}
         ></div>
         <div
-          className={`${`fixed flex flex-col p-4 w-[250px] border-t z-40 gap-3 top-[76px] left-0 bottom-0 transition-all duration-200 bg-white`}
+          className={`${`fixed flex items-center flex-col p-4 w-[250px] border-t z-40 gap-3 top-[76px] left-0 bottom-0 transition-all duration-200 bg-white`}
                         ${`md:flex-row md:gap-2 md:p-0 md:static md:border-none md:w-fit`}
                         ${
                           sideBarOpen
@@ -39,16 +40,18 @@ const Header = () => {
                         }`}
         >
           {links.map((link, i) => (
-            <a
+            <Link
               key={i}
-              href={link.path}
+              to={link.path}
               className={`${`p-3 w-full shadow-custom transition-all duration-200 rounded-md  text-gray-700`}
               ${`md:w-fit md:shadow-none md:hover:bg-gray-100`}`}
             >
               {link.title}
-            </a>
+            </Link>
           ))}
-          <BaseButton title="Sign In" className="w-full md:w-fit" />
+          <Link to="/login">
+            <BaseButton title="Sign In" className="w-full md:w-fit" />
+          </Link>
         </div>
       </div>
     </header>

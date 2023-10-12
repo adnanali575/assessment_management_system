@@ -145,12 +145,13 @@ const AssessmentsForm: React.FC = () => {
   useEffect(() => {
     setFormData({
       ...formData,
-      time: `${formData.hours}:${formData.minutes} ${formData.hours === "09" ||
-          formData.hours === "10" ||
-          formData.hours === "11"
+      time: `${formData.hours}:${formData.minutes} ${
+        formData.hours === "09" ||
+        formData.hours === "10" ||
+        formData.hours === "11"
           ? `AM`
           : `PM`
-        }`,
+      }`,
     });
   }, [formData.hours, formData.minutes]);
 

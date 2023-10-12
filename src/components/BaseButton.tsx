@@ -4,11 +4,19 @@ interface BaseButton {
   title: string;
   isLoading?: boolean;
   className?: string;
+  onClick?: () => void;
 }
-const BaseButton: React.FC<BaseButton> = ({ title, isLoading, className }) => {
+const BaseButton: React.FC<BaseButton> = ({
+  title,
+  isLoading,
+  className,
+  onClick,
+}) => {
   return (
     <button
-      className={`${className} bg-blue-600 text-white flex justify-center items-center px-4 py-2 rounded-md hover:bg-blue-500 active:scale-95`}
+      onClick={onClick}
+      className={`${className}
+    bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded active:scale-95 flex justify-center items-center`}
     >
       {isLoading ? <div className="loading-spinner "></div> : <>{title}</>}
     </button>
