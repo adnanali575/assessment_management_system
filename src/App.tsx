@@ -5,6 +5,7 @@ import AddAssessmentView from "./views/AddAssessmentView";
 import PageNotFound from "./views/PageNotFound";
 import LoginView from "./views/LoginView";
 import DefaultLayout from "./layouts/DefaultLayout";
+import AssessmentView from "./views/AssessmentView";
 
 function App() {
   useEffect(() => {
@@ -26,6 +27,10 @@ function App() {
         {
           path: "/add-assessment",
           element: <AddAssessmentView />,
+        },
+        {
+          path: "/assessment/:id",
+          element: <AssessmentView />,
         },
         {
           path: "*",

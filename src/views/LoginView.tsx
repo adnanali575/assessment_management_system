@@ -6,6 +6,7 @@ const LoginView = () => {
   const logIn = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
+
   return (
     <div className="px-4 flex justify-center items-center min-h-screen bg-gray-50 w-screen">
       <div className="w-[400px] flex flex-col items-center bg-white shadow-md p-8 rounded-md">

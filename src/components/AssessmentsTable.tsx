@@ -1,5 +1,8 @@
 import { getDate } from "../../helpers";
+import { useNavigate } from "react-router-dom";
 const AssessmentsTable: React.FC<any> = ({ assessment }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="w-full bg-white overflow-y-hidden overflow-x-auto shadow-md p-3">
@@ -26,11 +29,15 @@ const AssessmentsTable: React.FC<any> = ({ assessment }) => {
           <tbody>
             {assessment.assessments.map((item: any, index: number) => (
               <tr
+                onClick={() =>
+                  navigate("assessment/" + index + "+" + assessment.id)
+                }
                 key={index}
-                className={`${index % 2 === 0 ? `bg-white` : `bg-blue-50`} ${index % 2 === 0
+                className={`${index % 2 === 0 ? `bg-white` : `bg-blue-50`} ${
+                  index % 2 === 0
                     ? `hover:bg-gray-100 active:bg-gray-50 transition-all duration-200`
                     : `hover:bg-blue-100 active:bg-blue-50 transition-all duration-200`
-                  } border cursor-pointer`}
+                } border cursor-pointer`}
               >
                 <td className={`border px-2 sm:px py-2`}>{item.subject}</td>
                 <td className="border px-2 sm:px py-2 sm:min-w-[200px]">

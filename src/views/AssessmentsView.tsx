@@ -12,7 +12,7 @@ const AssessmentsView = () => {
     onSnapshot(semesterRef, (querySnapshot) => {
       let newArr: any[] = [];
       querySnapshot.forEach((doc) => {
-        const data = doc.data();
+        const data = { ...doc.data(), id: doc.id };
         newArr.push(data);
       });
       setAssessmentsData(newArr);

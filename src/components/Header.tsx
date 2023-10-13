@@ -31,7 +31,7 @@ const Header = () => {
             ${sideBarOpen ? `opacity-100` : `opacity-0 pointer-events-none`}`}
         ></div>
         <div
-          className={`${`fixed flex items-center flex-col p-4 w-[250px] border-t z-40 gap-3 top-[76px] left-0 bottom-0 transition-all duration-200 bg-white`}
+          className={`${`fixed flex items-center flex-col p-4 w-[250px] border-t z-40 gap-0 top-[76px] left-0 bottom-0 transition-all duration-200 bg-white`}
                         ${`md:flex-row md:gap-2 md:p-0 md:static md:border-none md:w-fit`}
                         ${
                           sideBarOpen
