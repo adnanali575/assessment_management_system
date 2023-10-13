@@ -1,16 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BaseButton from "./BaseButton";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
+  const location = useLocation();
 
   const links = [
     { title: "Home", path: "/" },
-    { title: "Add Assessment", path: "add-assessment" },
-    { title: "Previous Assessments", path: "/" },
+    { title: "Add Assessment", path: "/add-assessment" },
+    { title: "Previous Assessments", path: "/previous-assessments" },
     { title: "Time Table", path: "/time-table" },
   ];
+
+  useEffect(() => {
+    setSideBarOpen(false);
+  }, [location.pathname]);
 
   return (
     <header className="px-6 py-2 items-center fixed inset-0 bg-white h-fit shadow-md">
@@ -43,8 +48,10 @@ const Header = () => {
             <Link
               key={i}
               to={link.path}
-              className={`${`p-3 w-full shadow-custom transition-all duration-200 rounded-md text-gray-600`}
-              ${`md:w-fit md:shadow-none md:hover:bg-gray-100`}`}
+              className={`${`p-3 md:mx-1 w-full shadow-custom transition-all duration-200 rounded-md text-gray-600`}
+              ${`md:w-fit md:shadow-none md:hover:bg-gray-100`} ${
+                location.pathname === link.path && `bg-gray-100 text-sky-700`
+              }`}
             >
               {link.title}
             </Link>

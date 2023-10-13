@@ -17,7 +17,7 @@ const LoginView = () => {
           />
         </div>
         <form onSubmit={logIn} className="w-full space-y-3">
-          <p className="text-center text-2xl font-bold text-blue-700 pt-4">
+          <p className="text-center text-2xl font-bold text-sky-700 pt-4">
             Log in
           </p>
           <BaseInput label="Email" name="email" onChange={() => {}} />
@@ -26,7 +26,7 @@ const LoginView = () => {
             <BaseButton title="Sign in" className="w-full" />
             <Link
               to="/"
-              className="w-full block text-center bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded active:scale-95"
+              className="w-full block text-center bg-slate-500 hover:bg-slate-600 text-white py-2 px-4 rounded active:scale-95"
             >
               Home
             </Link>

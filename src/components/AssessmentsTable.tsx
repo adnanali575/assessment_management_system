@@ -12,16 +12,16 @@ const AssessmentsTable: React.FC<any> = ({ assessment }) => {
         <table className="border-collapse w-full text-sm">
           <thead>
             <tr>
-              <th className="border bg-blue-700 text-white font-medium text-left px-2 sm:px-4 py-2">
+              <th className="border bg-sky-700 text-white font-medium text-left px-2 sm:px-4 py-2">
                 Subject
               </th>
-              <th className="border bg-blue-700 text-white font-medium text-left px-2 sm:px py-2">
+              <th className="border bg-sky-700 text-white font-medium text-left px-2 sm:px py-2">
                 Title
               </th>
-              <th className="border bg-blue-700 text-white font-medium text-left px-4 py-2 hidden md:table-cell">
+              <th className="border bg-sky-700 text-white font-medium text-left px-4 py-2 hidden md:table-cell">
                 Issue Date
               </th>
-              <th className="border bg-blue-700 text-white font-medium text-left px-4 py-2 hidden md:table-cell">
+              <th className="border bg-sky-700 text-white font-medium text-left px-4 py-2 hidden md:table-cell">
                 Time
               </th>
             </tr>
@@ -33,10 +33,10 @@ const AssessmentsTable: React.FC<any> = ({ assessment }) => {
                   navigate("assessment/" + index + "+" + assessment.id)
                 }
                 key={index}
-                className={`${index % 2 === 0 ? `bg-white` : `bg-blue-50`} ${
+                className={`${index % 2 === 0 ? `bg-white` : `bg-sky-50`} ${
                   index % 2 === 0
                     ? `hover:bg-gray-100 active:bg-gray-50 transition-all duration-200`
-                    : `hover:bg-blue-100 active:bg-blue-50 transition-all duration-200`
+                    : `hover:bg-sky-100 active:bg-sky-50 transition-all duration-200`
                 } border cursor-pointer`}
               >
                 <td className={`border px-2 sm:px py-2`}>{item.subject}</td>

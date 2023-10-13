@@ -30,11 +30,10 @@ const SelectBox: React.FC<BaseSelectBoxProps> = ({
       )}
       <select
         required={required}
-        id="teacher" // You can change the id if needed
         name={name}
         value={value}
         onChange={handleChange}
-        className="border rounded-md px-3 py-2 w-full outline-none focus:border-blue-300"
+        className="border rounded-md px-3 py-2 w-full outline-none focus:border-sky-300"
       >
         <option disabled value="">
           {label}

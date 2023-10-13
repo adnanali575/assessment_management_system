@@ -158,6 +158,14 @@ const AssessmentsForm: React.FC = () => {
   // select box values -----------------------------------------
 
   // select box options
+  const teachers = [
+    "Dr. Sabit Rahim",
+    "Mr. Sajid Hussain",
+    "Chand Safi",
+    "Kamni Raees",
+    "Mr. Kifayat Hussain",
+  ];
+
   const subjects = [
     "Computer Networks",
     "Cloude Computing",
@@ -175,13 +183,6 @@ const AssessmentsForm: React.FC = () => {
     "Custom",
   ];
 
-  const teachers = [
-    "Dr. Sabit Rahim",
-    "Mr. Kifayat",
-    "Mr. Sajid Hussain",
-    "Chand Safi",
-    "Kamni Raees",
-  ];
   const hours = ["09", "10", "11", "12", "01", "02", "03", "04"];
   const minutes = ["00", "30"];
 
@@ -276,7 +277,7 @@ const AssessmentsForm: React.FC = () => {
               placeholder="Write description of assessment..."
               value={formData.description}
               onChange={handleDescriptionChange}
-              className="border rounded-md px-3 py-2 min-h-[100px] w-full outline-none focus:border-blue-300"
+              className="border rounded-md px-3 py-2 min-h-[100px] w-full outline-none focus:border-sky-300"
             ></textarea>
           </div>
         </div>

@@ -16,7 +16,7 @@ const BaseButton: React.FC<BaseButton> = ({
     <button
       onClick={onClick}
       className={`${className}
-    bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded active:scale-95 flex justify-center items-center`}
+    bg-sky-600 hover:bg-sky-500 text-white py-2 px-4 rounded active:scale-95 transition-all duration-200 flex justify-center items-center`}
     >
       {isLoading ? <div className="loading-spinner "></div> : <>{title}</>}
     </button>

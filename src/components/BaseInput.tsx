@@ -33,7 +33,7 @@ export const BaseInput: React.FC<BaseInputProps> = ({
         placeholder={name}
         value={value}
         onChange={handleChange}
-        className="border rounded-md px-3 py-2 w-full outline-none focus:border-blue-300"
+        className="border rounded-md px-3 py-2 w-full outline-none focus:border-sky-300"
       />
     </div>
   );
