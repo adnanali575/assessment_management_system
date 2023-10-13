@@ -43,13 +43,13 @@ const Header = () => {
             <Link
               key={i}
               to={link.path}
-              className={`${`p-3 w-full shadow-custom transition-all duration-200 rounded-md  text-gray-700`}
+              className={`${`p-3 w-full shadow-custom transition-all duration-200 rounded-md text-gray-600`}
               ${`md:w-fit md:shadow-none md:hover:bg-gray-100`}`}
             >
               {link.title}
             </Link>
           ))}
-          <Link to="/login" className="w-full md:w-fit mt-2">
+          <Link to="/login" className="w-full md:w-fit ms-2">
             <BaseButton title="Sign In" className="w-full" />
           </Link>
         </div>
