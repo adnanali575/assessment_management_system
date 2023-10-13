@@ -32,23 +32,18 @@ const AssessmentView = () => {
         const unsub = onSnapshot(docRef, (doc) => {
           const data = doc.data();
           if (data) {
-            const newData = {
-              ...data.assessments[index],
-              id: doc.id,
-              lastDate: data?.lastDate,
-            };
+            const newData = data.assessments[index];
             setTitle(newData.title);
             setDescription(newData.description);
             const assessmentArray = [
               { fieldName: "Subject", value: newData.subject },
               { fieldName: "Teacher", value: newData.teacher },
               { fieldName: "Issue Date", value: newData.issueDate },
-              { fieldName: "Last Date", value: newData.lastDate },
+              { fieldName: "Last Date", value: data.lastDate },
               { fieldName: "Time", value: newData.time },
               { fieldName: "Added By", value: newData.addedBy },
             ];
             setAssessmentData(assessmentArray);
-            console.log(assessmentArray);
           }
         });
 
@@ -57,9 +52,9 @@ const AssessmentView = () => {
     }
   }, [paramId, paramIndex]);
   return (
-    <div className="flex justify-center px-4 pb-4">
+    <div className="flex justify-center">
       {assessmentData.length ? (
-        <div className="p-4 sm:p-8 text-sm bg-white shadow-md rounded-md w-[1000px]">
+        <div className="p-4 sm:p-8 text-sm bg-white shadow-md rounded-md w-full xl:w-[940px]">
           <p className="sm:text-xl font-bold border-b py-2 mb-4">{title}</p>
           {assessmentData.map((item, i) => (
             <div key={i} className="flex gap-2">

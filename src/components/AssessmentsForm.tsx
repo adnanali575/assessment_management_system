@@ -190,12 +190,12 @@ const AssessmentsForm: React.FC = () => {
     <div className="w-full flex justify-center">
       <form
         onSubmit={addAssessment}
-        className="space-y-4 w-full sm:w-[750px] bg-white p-8 shadow-md"
+        className="space-y-4 w-full xl:w-[940px] bg-white p-8 shadow-md"
       >
         <h1 className="font-bold text-xl text-center">
           Add Assessment Details
         </h1>
-        <div className="flex flex-col sm:grid grid-cols-2 gap-4">
+        <div className="flex flex-col lg:grid grid-cols-2 gap-4">
           <SelectBox
             name="subject"
             label="Select Subject"
@@ -274,10 +274,10 @@ const AssessmentsForm: React.FC = () => {
               Description
             </label>
             <textarea
-              placeholder="Write description of assessment..."
+              placeholder="Assessment description..."
               value={formData.description}
               onChange={handleDescriptionChange}
-              className="border rounded-md px-3 py-2 min-h-[100px] w-full outline-none focus:border-sky-300"
+              className="border resize-none h-[200px] rounded-md px-3 py-2 min-h-[100px] w-full outline-none focus:border-sky-300"
             ></textarea>
           </div>
         </div>

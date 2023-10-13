@@ -6,6 +6,7 @@ import PageNotFound from "./views/PageNotFound";
 import LoginView from "./views/LoginView";
 import DefaultLayout from "./layouts/DefaultLayout";
 import AssessmentView from "./views/AssessmentView";
+import { MyContextProvider } from "./context/commonContext";
 
 function App() {
   useEffect(() => {
@@ -41,7 +42,11 @@ function App() {
     { path: "/login", element: <LoginView /> },
   ]);
 
-  return <RouterProvider router={routes} />;
+  return (
+    <MyContextProvider>
+      <RouterProvider router={routes} />
+    </MyContextProvider>
+  );
 }
 
 export default App;

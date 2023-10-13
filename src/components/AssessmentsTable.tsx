@@ -18,7 +18,7 @@ const AssessmentsTable: React.FC<any> = ({ assessment }) => {
               <th className="border bg-sky-700 text-white font-medium text-left px-2 sm:px py-2">
                 Title
               </th>
-              <th className="border bg-sky-700 text-white font-medium text-left px-4 py-2 hidden md:table-cell">
+              <th className="border bg-sky-700 text-white font-medium text-left px-4 py-2 hidden lg:table-cell">
                 Issue Date
               </th>
               <th className="border bg-sky-700 text-white font-medium text-left px-4 py-2 hidden md:table-cell">
@@ -40,10 +40,10 @@ const AssessmentsTable: React.FC<any> = ({ assessment }) => {
                 } border cursor-pointer`}
               >
                 <td className={`border px-2 sm:px py-2`}>{item.subject}</td>
-                <td className="border px-2 sm:px py-2 min-w-[110px] sm:min-w-[200px]">
+                <td className="border px-2 sm:px py-2 min-w-[110px]">
                   {item.title}
                 </td>
-                <td className="border px-4 py-2 hidden md:table-cell">
+                <td className="border px-4 py-2 hidden lg:table-cell">
                   {getDate(new Date(item.issueDate))}
                 </td>
                 <td className="border px-4 py-2 hidden md:table-cell">

@@ -1,65 +1,41 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import BaseButton from "./BaseButton";
 import { Link, useLocation } from "react-router-dom";
+import { MyContext } from "../context/commonContext";
 
 const Header = () => {
-  const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
+  const myContext = useContext(MyContext);
   const location = useLocation();
 
-  const links = [
-    { title: "Home", path: "/" },
-    { title: "Add Assessment", path: "/add-assessment" },
-    { title: "Previous Assessments", path: "/previous-assessments" },
-    { title: "Time Table", path: "/time-table" },
-  ];
-
   useEffect(() => {
-    setSideBarOpen(false);
+    myContext?.setIsSidebarOpen(false);
   }, [location.pathname]);
 
   return (
-    <header className="px-6 py-2 items-center fixed inset-0 bg-white h-fit shadow-md">
+    <header
+      className="px-6 py-2 z-10 items-center fixed inset-0 bg-white h-fit shadow-md"
+      style={{ marginTop: "0px" }}
+    >
       <div className="w-full h flex items-center justify-between">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/en/d/dc/KIU-Logo.jpg"
-          className="h-[60px]"
-        />
+        <Link to="/">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/en/d/dc/KIU-Logo.jpg"
+            className="h-[60px] block md:hidden"
+          />
+          <img
+            src="https://studentaffairs.kiu.edu.pk/wp-content/themes/student-affairs/assets/img/logo-kiu.png"
+            className="h-[60px] hidden md:block"
+          />
+        </Link>
         <div
-          onClick={() => setSideBarOpen(!sideBarOpen)}
-          className="md:hidden cursor-pointer"
+          onClick={() => myContext?.setIsSidebarOpen(!myContext.isSidebarOpen)}
+          className="md:hidden cursor-pointer bg-gray-100 active:bg-gray-200 p-3 rounded-full transition-all duration-200 w-9 h-9 flex items-center justify-center"
         >
-          Toggle
+          <i className="fa-solid fa-bars text-base"></i>
         </div>
-        <div
-          onClick={() => setSideBarOpen(false)}
-          className={`fixed md:hidden top-[76px] bottom-0 left-0 bg-black bg-opacity-40 transition-all duration-200 cursor-pointer w-screen
-            ${sideBarOpen ? `opacity-100` : `opacity-0 pointer-events-none`}`}
-        ></div>
-        <div
-          className={`${`fixed flex items-center flex-col p-6 w-[250px] border-t z-40 gap-3 md:gap-0 top-[76px] left-0 bottom-0 transition-all duration-200 bg-white`}
-                        ${`md:flex-row md:gap-2 md:p-0 md:static md:border-none md:w-fit`}
-                        ${
-                          sideBarOpen
-                            ? `sidebar-translation-reset`
-                            : `sidebar-translation`
-                        }`}
-        >
-          {links.map((link, i) => (
-            <Link
-              key={i}
-              to={link.path}
-              className={`${`p-3 md:mx-1 w-full shadow-custom transition-all duration-200 rounded-md text-gray-600`}
-              ${`md:w-fit md:shadow-none md:hover:bg-gray-100`} ${
-                location.pathname === link.path && `bg-gray-100 text-sky-700`
-              }`}
-            >
-              {link.title}
-            </Link>
-          ))}
-          <Link to="/login" className="w-full md:w-fit ms-2">
-            <BaseButton title="Sign In" className="w-full" />
-          </Link>
-        </div>
+        <Link to="/login" className="hidden md:block">
+          <BaseButton title="Sign In" className="w-full" />
+        </Link>
       </div>
     </header>
   );
