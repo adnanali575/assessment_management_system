@@ -46,7 +46,7 @@ const AssessmentView = () => {
   }, [paramId, paramIndex]);
   return (
     <div className="flex justify-center px-4 pb-4">
-      <div className="p-4 sm:p-8 bg-white shadow-md rounded-md max-w-[1000px]">
+      <div className="p-4 sm:p-8 text-sm bg-white shadow-md rounded-md max-w-[1000px]">
         <p className="sm:text-xl font-bold border-b py-2 mb-4">
           {assessmentData.title}
         </p>
@@ -65,9 +65,11 @@ const AssessmentView = () => {
               <td className="p-2 text-gray-600">{assessmentData.teacher}</td>
             </tr>
             <tr>
-              <td className="p-2 sm:w-[120px] uppercase  font-bold text-gray-500">
-                Issue Date
-              </td>
+              {assessmentData.issueDate && (
+                <td className="p-2 sm:w-[120px] uppercase  font-bold text-gray-500">
+                  Issue Date
+                </td>
+              )}
               <td className="p-2 text-gray-600">
                 {getDate(new Date(assessmentData.issueDate))}
               </td>
@@ -94,12 +96,14 @@ const AssessmentView = () => {
             </tr>
           </tbody>
         </table>
-        <div className="border-t mt-4">
-          <p className="p-2 uppercase  font-bold text-gray-500 text-justify">
-            Description
-          </p>
-          <p>{assessmentData.description}</p>
-        </div>
+        {assessmentData.description && (
+          <div className="border-t mt-4">
+            <p className="py-2 uppercase  font-bold text-gray-500 text-justify">
+              Description
+            </p>
+            <p>{assessmentData.description}</p>
+          </div>
+        )}
       </div>
     </div>
   );
