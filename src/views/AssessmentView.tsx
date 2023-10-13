@@ -5,7 +5,9 @@ import { getDate } from "../../helpers";
 const AssessmentView = () => {
   const [paramId, setParamId] = useState<string>("");
   const [paramIndex, setParamIndex] = useState<string>("");
-  const [assessmentData, setAssessmentData] = useState<any>({});
+  const [assessmentData, setAssessmentData] = useState<any[]>([]);
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
 
   const params = useParams();
 
@@ -13,7 +15,6 @@ const AssessmentView = () => {
     if (params.id) {
       const regex = /(\d+)\+(.+)/;
       const match = params.id.match(regex);
-      console.log(match);
       if (match) {
         const index = match[1];
         const id = match[2];
@@ -35,8 +36,18 @@ const AssessmentView = () => {
               id: doc.id,
               lastDate: data?.lastDate,
             };
-            console.log(newData);
-            setAssessmentData(newData);
+            setTitle(newData.title);
+            setDescription(newData.description);
+            const assessmentArray = [
+              { fieldName: "Subject", value: newData.subject },
+              { fieldName: "Teacher", value: newData.teacher },
+              { fieldName: "Issue Date", value: newData.issueDate },
+              { fieldName: "Last Date", value: newData.lastDate },
+              { fieldName: "Time", value: newData.time },
+              { fieldName: "Added By", value: newData.addedBy },
+            ];
+            setAssessmentData(assessmentArray);
+            console.log(assessmentArray);
           }
         });
 
@@ -47,61 +58,30 @@ const AssessmentView = () => {
   return (
     <div className="flex justify-center px-4 pb-4">
       <div className="p-4 sm:p-8 text-sm bg-white shadow-md rounded-md max-w-[1000px]">
-        <p className="sm:text-xl font-bold border-b py-2 mb-4">
-          {assessmentData.title}
-        </p>
+        <p className="sm:text-xl font-bold border-b py-2 mb-4">{title}</p>
         <table>
           <tbody>
-            <tr>
-              <td className="p-2 sm:w-[120px] uppercase  font-bold text-gray-500">
-                Subject
-              </td>
-              <td className="p-2 text-gray-600">{assessmentData.subject}</td>
-            </tr>
-            <tr>
-              <td className="p-2 sm:w-[120px] uppercase  font-bold text-gray-500">
-                Teacher
-              </td>
-              <td className="p-2 text-gray-600">{assessmentData.teacher}</td>
-            </tr>
-            <tr>
-              {assessmentData.issueDate && (
+            {assessmentData.map((item, i) => (
+              <tr key={i}>
                 <td className="p-2 sm:w-[120px] uppercase  font-bold text-gray-500">
-                  Issue Date
+                  {item.fieldName}
                 </td>
-              )}
-              <td className="p-2 text-gray-600">
-                {getDate(new Date(assessmentData.issueDate))}
-              </td>
-            </tr>
-            <tr>
-              <td className="p-2 sm:w-[120px] uppercase  font-bold text-gray-500">
-                Last Date
-              </td>
-              <td className="p-2 text-gray-600">
-                {getDate(new Date(assessmentData.lastDate))}
-              </td>
-            </tr>
-            <tr>
-              <td className="p-2 sm:w-[120px] uppercase  font-bold text-gray-500">
-                Time
-              </td>
-              <td className="p-2 text-gray-600">{assessmentData.time}</td>
-            </tr>
-            <tr>
-              <td className="p-2 sm:w-[120px] uppercase  font-bold text-gray-500">
-                Added By
-              </td>
-              <td className="p-2 text-gray-600">{assessmentData.addedBy}</td>
-            </tr>
+                <td className="p-2 text-gray-600">
+                  {item.fieldName === "Last Date" ||
+                  item.fieldName === "Issue Date"
+                    ? getDate(new Date(item.value))
+                    : item.value}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
-        {assessmentData.description && (
+        {description && (
           <div className="border-t mt-4">
             <p className="py-2 uppercase  font-bold text-gray-500 text-justify">
               Description
             </p>
-            <p>{assessmentData.description}</p>
+            <p>{description}</p>
           </div>
         )}
       </div>

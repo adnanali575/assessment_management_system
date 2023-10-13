@@ -40,7 +40,7 @@ const AssessmentsTable: React.FC<any> = ({ assessment }) => {
                 } border cursor-pointer`}
               >
                 <td className={`border px-2 sm:px py-2`}>{item.subject}</td>
-                <td className="border px-2 sm:px py-2 sm:min-w-[200px]">
+                <td className="border px-2 sm:px py-2 min-w-[110px] sm:min-w-[200px]">
                   {item.title}
                 </td>
                 <td className="border px-4 py-2 hidden md:table-cell">
