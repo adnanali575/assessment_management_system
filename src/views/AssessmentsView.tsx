@@ -19,10 +19,16 @@ const AssessmentsView = () => {
     });
   }, []);
   return (
-    <div className="w-full xl:w-[940px] flex flex-col items-center gap-2 sm:gap-4 md:gap-8">
-      {assessmentsData.map((assessment, i) => (
-        <AssessmentsTable key={i} assessment={assessment} />
-      ))}
+    <div className="w-full xl:w-[940px] flex flex-col items-center gap-2 mx-auto sm:gap-4 md:gap-8">
+      {assessmentsData.length ? (
+        <>
+          {assessmentsData.map((assessment, i) => (
+            <AssessmentsTable key={i} assessment={assessment} />
+          ))}
+        </>
+      ) : (
+        <p>No assessment added</p>
+      )}
     </div>
   );
 };

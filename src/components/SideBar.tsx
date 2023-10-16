@@ -15,10 +15,6 @@ const SideBar = () => {
   ];
 
   useEffect(() => {
-    console.log(myContext?.isSidebarOpen);
-  }, [myContext?.isSidebarOpen]);
-  useEffect(() => {
-    console.log(myContext?.isSidebarOpen);
     myContext?.setIsSidebarOpen(false);
   }, [location.pathname]);
   return (
@@ -33,7 +29,7 @@ const SideBar = () => {
             }`}
       ></div>
       <div
-        className={`fixed top-[76px] bottom-0 left-0 bg-white transition-all shadow-md border-t z-40 ${
+        className={`fixed flex flex-col justify-between top-[76px] bottom-0 left-0 bg-white transition-all shadow-md border-t z-40 ${
           myContext?.isSidebarOpen
             ? `sidebar-translation-reset`
             : `sidebar-translation`
@@ -58,6 +54,9 @@ const SideBar = () => {
             <BaseButton title="Sign In" className="w-full" />
           </Link>
         </div>
+        <p className="text-sm text-gray-500 text-center py-3">
+          KIU, BSSE 5th Semester
+        </p>
       </div>
     </>
   );
