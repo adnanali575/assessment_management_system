@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AssessmentsView from "./views/AssessmentsView";
 import AddAssessmentView from "./views/AddAssessmentView";
@@ -9,17 +8,6 @@ import AssessmentView from "./views/AssessmentView";
 import { MyContextProvider } from "./context/commonContext";
 
 function App() {
-  useEffect(() => {
-    const disableTextSelection = () => {
-      document.body.style.userSelect = "none";
-    };
-    disableTextSelection();
-
-    return () => {
-      document.removeEventListener("selectstart", disableTextSelection);
-    };
-  }, []);
-
   const routes = createBrowserRouter([
     {
       element: <DefaultLayout />,
